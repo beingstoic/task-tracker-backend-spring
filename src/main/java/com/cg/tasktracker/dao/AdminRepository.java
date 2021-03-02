@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.cg.tasktracker.entity.AdminEntity;
 @Repository
 public interface AdminRepository extends JpaRepository<AdminEntity, Long> {
-
+	
+	boolean existsByEmail(String email);
+	AdminEntity findByEmail(String email);
 }

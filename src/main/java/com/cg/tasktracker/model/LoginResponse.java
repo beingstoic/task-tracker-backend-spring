@@ -2,13 +2,21 @@ package com.cg.tasktracker.model;
 
 public class LoginResponse {
 	
-	private long userId;
+	private String userId;
 	private String name;
 	private String email;
-	public long getUserId() {
+	private String role;
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getName() {
@@ -24,3 +32,4 @@ public class LoginResponse {
 		this.email = email;
 	}
 }
+

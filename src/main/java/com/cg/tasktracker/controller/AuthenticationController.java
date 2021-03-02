@@ -13,18 +13,18 @@ import com.cg.tasktracker.exceptions.CustomException;
 import com.cg.tasktracker.model.LoginModel;
 import com.cg.tasktracker.model.LoginResponse;
 import com.cg.tasktracker.model.SignupModel;
-import com.cg.tasktracker.service.UserService;
+import com.cg.tasktracker.service.AuthenticationServiceImpl;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin("*")
 public class AuthenticationController {
 	@Autowired
-	UserService userService;
+	AuthenticationServiceImpl authService;
 
 	@PostMapping(value="/login/credentials")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginModel credentials) throws CustomException{
-		 LoginResponse response = userService.login(credentials);
+		 LoginResponse response = authService.login(credentials);
 		 if(response==null)
 			 throw new CustomException("Invalid username or password");
 			 
@@ -33,7 +33,7 @@ public class AuthenticationController {
 	
 	@PostMapping(value="/register")
 	public ResponseEntity<LoginResponse> signup(@RequestBody SignupModel signupRequest) throws CustomException{
-		LoginResponse response=userService.signup(signupRequest);
+		LoginResponse response=authService.signup(signupRequest);
 		 if(response==null)
 			 throw new CustomException("Invalid username or password");
 			 

@@ -5,7 +5,15 @@ public class SignupModel {
 	private String email;
 	private String password;
 	private String role;
+	private String userId;
 	private String gender;
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getGender() {
 		return gender;
 	}
