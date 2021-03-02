@@ -1,4 +1,4 @@
-package com.cg.tasktracker.demo;
+package com.cg.tasktracker;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

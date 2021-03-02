@@ -1,4 +1,4 @@
-package com.cg.tasktracker.demo;
+package com.cg.tasktracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
