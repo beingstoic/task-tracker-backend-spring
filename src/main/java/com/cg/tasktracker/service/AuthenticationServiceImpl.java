@@ -101,8 +101,8 @@ public class AuthenticationServiceImpl{
 				response.setUserId(admin.getAdminId());
 				response.setEmail(credentials.getEmail());
 				response.setRole(credentials.getRole());
+				return response;
 			}
-			else return null;
 		}
 		else if(credentials.getRole().equals("EMPLOYEE")) {
 			EmployeeEntity emp = employeeDao.findByEmail(credentials.getEmail());
@@ -111,8 +111,9 @@ public class AuthenticationServiceImpl{
 				response.setUserId(emp.getEmpId());
 				response.setEmail(credentials.getEmail());
 				response.setRole(credentials.getRole());
+				return response;
 			}
-			else return null;
+			
 		}
 		
 		return null;

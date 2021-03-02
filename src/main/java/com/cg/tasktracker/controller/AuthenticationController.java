@@ -22,7 +22,7 @@ public class AuthenticationController {
 	@Autowired
 	AuthenticationServiceImpl authService;
 
-	@PostMapping(value="/login/credentials")
+	@PostMapping(value="/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginModel credentials) throws CustomException{
 		 LoginResponse response = authService.login(credentials);
 		 if(response==null)

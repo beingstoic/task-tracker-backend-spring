@@ -1,100 +1,116 @@
 package com.cg.tasktracker.entity;
 
+ 
+
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+ 
+
 @Entity
 public class Tasktracker {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int tt_id;
+ 
+
+    @Id
+    @Column(name="task_tracker_id")
+    private int taskId;
+
+    @ManyToOne(cascade = { CascadeType.MERGE })
+    @JoinColumn(name = "emp_id")
+    private EmployeeEntity empId;
+
+    @Column(name = "task_date", nullable = false)
+    private Date taskDate;
+    
+    @Column(name = "task_name", nullable = false)
+    private String taskName;
+    
+    @Column(name = "additional_detail", nullable = false, length = 6000)
+    private String additionalDetails;
+    
+    @Column(name = "start_time", nullable = false)
+    private Date startTime;
+    
+    @Column(name = "end_time", nullable = false)
+    private Date endTime;
+
+
+    public Tasktracker() {
+        super();
+    }
+
+    public int getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
 	
-	
-	@ManyToOne(cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "em_id")
-	private EmployeeEntity emp;
-	
-	
-	private Date taskdate;
-	private String taskname;
-	private String additional_detail;
-	private Date start_time;
-	private Date end_time;
-
-	public Tasktracker() {
-		super();
-		// TODO Auto-generated constructor stub
+	@JsonIgnore
+	public EmployeeEntity getEmpId() {
+		return empId;
 	}
 
-
-	public int getTt_id() {
-		return tt_id;
+	public void setEmpId(EmployeeEntity empId) {
+		this.empId = empId;
 	}
 
-	public void setTt_id(int tt_id) {
-		this.tt_id = tt_id;
+	public Date getTaskDate() {
+		return taskDate;
 	}
 
-
-
-
-
-	public EmployeeEntity getEmp() {
-		return emp;
+	public void setTaskDate(Date taskDate) {
+		this.taskDate = taskDate;
 	}
 
-
-	public void setEmp(EmployeeEntity emp) {
-		this.emp = emp;
+	public String getTaskName() {
+		return taskName;
 	}
 
-
-	public Date getTaskdate() {
-		return taskdate;
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
 	}
 
-	public void setTaskdate(Date taskdate) {
-		this.taskdate = taskdate;
+	public String getAdditionalDetails() {
+		return additionalDetails;
 	}
 
-	public String getTaskname() {
-		return taskname;
+	public void setAdditionalDetails(String additionalDetails) {
+		this.additionalDetails = additionalDetails;
 	}
 
-	public void setTaskname(String taskname) {
-		this.taskname = taskname;
-	}
+	public Date getStartTime() {
+        return startTime;
+    }
 
-	public String getAdditional_detail() {
-		return additional_detail;
-	}
+ 
 
-	public void setAdditional_detail(String additional_detail) {
-		this.additional_detail = additional_detail;
-	}
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
 
-	public Date getStart_time() {
-		return start_time;
-	}
+ 
 
-	public void setStart_time(Date start_time) {
-		this.start_time = start_time;
-	}
+    public Date getEndTime() {
+        return endTime;
+    }
 
-	public Date getEnd_time() {
-		return end_time;
-	}
+ 
 
-	public void setEnd_time(Date end_time) {
-		this.end_time = end_time;
-	}
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+ 
 
 }
