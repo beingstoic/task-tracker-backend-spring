@@ -1,0 +1,63 @@
+package com.cg.tasktracker.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.tasktracker.entity.EmployeeEntity;
+import com.cg.tasktracker.entity.TaskTracker;
+import com.cg.tasktracker.exceptions.AuthenticationException;
+import com.cg.tasktracker.exceptions.CustomException;
+import com.cg.tasktracker.model.LoginModel;
+import com.cg.tasktracker.service.EmployeeServiceImpl;
+
+@RestController
+@RequestMapping("/employee")
+@CrossOrigin(origins = "*", maxAge = 3600)
+public class EmployeeController {
+
+	@Autowired
+	private EmployeeServiceImpl service;
+	
+
+	@PostMapping(value="/login")
+	public ResponseEntity<EmployeeEntity> login(@RequestBody LoginModel credentials) throws AuthenticationException{
+		 EmployeeEntity response = service.employeeLogin(credentials);
+		 if(response==null)
+			 throw new AuthenticationException("Invalid username or password");
+			 
+	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping(value="/register")
+	public ResponseEntity<EmployeeEntity> signup(@RequestBody EmployeeEntity signupRequest) throws CustomException{
+		EmployeeEntity response=service.employeeSignup(signupRequest);
+		 if(response==null)
+			 throw new CustomException("Invalid username or password");
+			 
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@GetMapping(value="fetch-tasks/{empId}")
+	public ResponseEntity<List<TaskTracker>> fetchTasks(@PathVariable String empId){
+		
+		List<TaskTracker> tasks = service.fetchEmployeeTasks(empId);
+		System.out.println("This is being called");
+		return new ResponseEntity<>(tasks, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping(value="fetch-employee/{empId}")
+	public ResponseEntity<EmployeeEntity> fetchEmployeeDetails(@PathVariable String empId){
+		return new ResponseEntity<>(service.fetchEmployee(empId), HttpStatus.OK);
+	}
+}
