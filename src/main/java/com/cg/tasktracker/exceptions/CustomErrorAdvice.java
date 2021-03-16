@@ -27,7 +27,7 @@ public class CustomErrorAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
     
-    @ExceptionHandler({ AuthenticationException.class })
+    @ExceptionHandler({ AuthenticationExceptions.class })
     public ResponseEntity<ErrorInfo> handle2(Exception ce) {
         ErrorInfo error = new ErrorInfo(ce.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);

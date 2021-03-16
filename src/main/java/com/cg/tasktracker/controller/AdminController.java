@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.tasktracker.entity.AdminEntity;
-import com.cg.tasktracker.exceptions.AuthenticationException;
+import com.cg.tasktracker.exceptions.AuthenticationExceptions;
 import com.cg.tasktracker.exceptions.CustomException;
 import com.cg.tasktracker.model.LoginModel;
 import com.cg.tasktracker.service.AdminService;
@@ -24,10 +24,10 @@ public class AdminController {
 	private AdminService service;
 	
 	@PostMapping(value="/login")
-	public ResponseEntity<AdminEntity> login(@RequestBody LoginModel credentials) throws AuthenticationException{
+	public ResponseEntity<AdminEntity> login(@RequestBody LoginModel credentials) throws AuthenticationExceptions{
 		 AdminEntity response = service.adminLogin(credentials);
 		 if(response==null)
-			 throw new AuthenticationException("Invalid username or password");
+			 throw new AuthenticationExceptions("Invalid username or password");
 			 
 	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}

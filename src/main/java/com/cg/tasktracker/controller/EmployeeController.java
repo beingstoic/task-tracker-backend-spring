@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.tasktracker.entity.EmployeeEntity;
 import com.cg.tasktracker.entity.TaskTracker;
-import com.cg.tasktracker.exceptions.AuthenticationException;
+import com.cg.tasktracker.exceptions.AuthenticationExceptions;
 import com.cg.tasktracker.exceptions.CustomException;
 import com.cg.tasktracker.model.LoginModel;
 import com.cg.tasktracker.service.EmployeeServiceImpl;
@@ -30,12 +30,18 @@ public class EmployeeController {
 	
 
 	@PostMapping(value="/login")
-	public ResponseEntity<EmployeeEntity> login(@RequestBody LoginModel credentials) throws AuthenticationException{
-		 EmployeeEntity response = service.employeeLogin(credentials);
-		 if(response==null)
-			 throw new AuthenticationException("Invalid username or password");
-			 
-	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	public ResponseEntity<EmployeeEntity> login(@RequestBody LoginModel credentials) throws AuthenticationExceptions{
+		try {
+			EmployeeEntity response = service.employeeLogin(credentials);
+			if(response==null)
+				 throw new AuthenticationExceptions("Invalid username or password");
+				 
+		        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+		}
+		catch(AuthenticationExceptions e) {
+			throw new AuthenticationExceptions("Invalid username or password");
+		}
+		 
 	}
 	
 	@PostMapping(value="/register")
