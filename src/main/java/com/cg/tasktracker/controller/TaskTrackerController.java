@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.tasktracker.entity.EmployeeEntity;
 import com.cg.tasktracker.entity.TaskTracker;
 import com.cg.tasktracker.exceptions.CustomException;
+import com.cg.tasktracker.model.EmpTaskModel;
 import com.cg.tasktracker.service.TaskTrackerService;
 
 @RestController
@@ -133,37 +132,37 @@ public class TaskTrackerController {
         }
 	
 
-	@GetMapping(value = "/getbadtask/{startdate}/{enddate}")
-	public Map<TaskTracker, String> getBadTask(@PathVariable String startdate,@PathVariable String enddate) {
-		Date convertedDates = null;
-		Date convertedDatee = null;
-		try {
-			convertedDates = new SimpleDateFormat("yyyy-MM-dd").parse(startdate);
-			convertedDatee = new SimpleDateFormat("yyyy-MM-dd").parse(enddate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return service.badtask(convertedDates,convertedDatee);
-	}
+//	@GetMapping(value = "/getbadtask/{startdate}/{enddate}")
+//	public BadActivity getBadTask(@PathVariable String startdate,@PathVariable String enddate) {
+//		Date convertedDates = null;
+//		Date convertedDatee = null;
+//		try {
+//			convertedDates = new SimpleDateFormat("yyyy-MM-dd").parse(startdate);
+//			convertedDatee = new SimpleDateFormat("yyyy-MM-dd").parse(enddate);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		return service.badtask(convertedDates,convertedDatee);
+//	}
 
-	@GetMapping(value = "/getbademployee")
-	public Map<EmployeeEntity, String> getBadEmployee() {
-		return service.badEmployee();
-	}
+	@PostMapping(path = "/fetch-bad-tasks-by-date/",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<EmpTaskModel> getBadEmployee(@RequestBody Date date) {
+		System.out.println(date);
+		return service.getBadEmployee(date);
+	}	
 	
-	@GetMapping(value="/getbademployeewithdate/{startdate}/{enddate}")
-	public Map<EmployeeEntity, String> getBadEmployeeWithDate(@PathVariable String startdate,@PathVariable String enddate) {
-		Date convertedDates = null;
-		Date convertedDatee = null;
-		try {
-			convertedDates = new SimpleDateFormat("yyyy-MM-dd").parse(startdate);
-			convertedDatee = new SimpleDateFormat("yyyy-MM-dd").parse(enddate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return service.badEmployeeAccToDate(convertedDates, convertedDatee);
-	}
+//	@GetMapping(value="/getbademployeewithdate/{startdate}/{enddate}")
+//	public List<BadActivity> getBadEmployeeWithDate(@PathVariable String startdate,@PathVariable String enddate) {
+//		Date convertedDates = null;
+//		Date convertedDatee = null;
+//		try {
+//			convertedDates = new SimpleDateFormat("yyyy-MM-dd").parse(startdate);
+//			convertedDatee = new SimpleDateFormat("yyyy-MM-dd").parse(enddate);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		return service.badEmployeeAccToDate(convertedDates, convertedDatee);
+//	}
 
-	
 	
 }
