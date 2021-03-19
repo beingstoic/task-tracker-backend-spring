@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.cg.tasktracker.dao.EmployeeRepository;
 import com.cg.tasktracker.dao.TaskTrackerRepository;
-import com.cg.tasktracker.entity.EmployeeEntity;
 import com.cg.tasktracker.entity.TaskTracker;
 import com.cg.tasktracker.exceptions.CustomException;
 import com.cg.tasktracker.model.EmpTaskModel;
@@ -261,53 +260,55 @@ public class TaskTrackerService {
 		
 		return badEmpTask;
 	}
-	public List<EmpTaskModel> badEmployeeAccToDate(Date startDate, Date endDate) {
-		// Map<EmployeeEntity, String> badEmployee = new HashMap<EmployeeEntity,
-		// String>();
-		List<EmpTaskModel> EmpTaskModel = new ArrayList<>();
-		 int count = 0;
-		// long dur = 0;
-		for (EmployeeEntity emp : empRepo.findAll()) {
-			EmpTaskModel bad = new EmpTaskModel();
-			List<TaskTracker> badTask = new ArrayList<>();
-			
-			bad.setTotalDuration(0);
-			 count = 0;
-			// dur = 0;
-			for (TaskTracker task : repo.findAll()) {
-			if ((task.getTaskDate().compareTo(startDate)>=0) && (task.getTaskDate().compareTo(endDate)<=0)) {
-					if (task.getTaskName().equals("Break")) {
-						// break as a task is not counted
-						System.out.println("break is counted");
-						break;
-					} // if
-					else {
-						if (task.getEmployee().getEmpId().equals(emp.getEmpId())) {
-							System.out.println("there is a task with an employee today");
-							bad.setTotalDuration(bad.getTotalDuration() + task.getDuration());
-							badTask.add(task);
-							 count += 1;
-							// dur += task.getDuration();
-						} // if
-
-					} // else
-				} // main if
-			} // for
-			bad.setEmpId(emp.getEmpId());
-			bad.setTasks(badTask);
-			if (count == 0)
-				EmpTaskModel.add(bad);        //only if employee has not done any task then he is an bad employee
-//				badEmployee.put(emp, "No tasks within given dates ");
-			//else if (bad.getCount() == 1)
-				//EmpTaskModel.add(bad);
-//				badEmployee.put(emp, "Only 1 task done within given dates with duration = " + dur / 1000 + " sec");
-			//else if (bad.getCount() > 1 && bad.getTotalDuration() < 7200000)
-				//EmpTaskModel.add(bad);
-//				badEmployee.put(emp, "total task duration is less than 2 hours. duration = " + dur / 1000 + " sec");
-
-		} // for
-			// return badEmployee;
-		return EmpTaskModel;
-	}
+//	public List<EmpTaskModel> badEmployeeAccToDate(Date startDate, Date endDate) {
+//		// Map<EmployeeEntity, String> badEmployee = new HashMap<EmployeeEntity,
+//		// String>();
+//		List<EmpTaskModel> EmpTaskModel = new ArrayList<>();
+//		// int count = 0;
+//		// long dur = 0;
+//		for (EmployeeEntity emp : empRepo.findAll()) {
+//			EmpTaskModel bad = new EmpTaskModel();
+//			List<TaskTracker> badTask = new ArrayList<>();
+//			bad.setCount(0);
+//			bad.setTotalDuration(0);
+//			// count = 0;
+//			// dur = 0;
+//			for (TaskTracker task : repo.findAll()) {
+//				if ((task.getTaskDate().getDate() >= startDate.getDate())
+//						&& (task.getTaskDate().getDate() <= endDate.getDate())) {
+//					if (task.getTaskName().equals("Break")) {
+//						// break as a task is not counted
+//						System.out.println("break is counted");
+//						break;
+//					} // if
+//					else {
+//						if (task.getEmployee().getEmpId().equals(emp.getEmpId())) {
+//							System.out.println("there is a task with an employee today");
+//							bad.setCount(bad.getCount() + 1);
+//							bad.setTotalDuration(bad.getTotalDuration() + task.getDuration());
+//							badTask.add(task);
+//							// count += 1;
+//							// dur += task.getDuration();
+//						} // if
+//
+//					} // else
+//				} // main if
+//			} // for
+//			bad.setEmployee(emp);
+//			bad.setTask(badTask);
+//			if (bad.getCount() == 0)
+//				EmpTaskModel.add(bad);
+////				badEmployee.put(emp, "No tasks within given dates ");
+//			else if (bad.getCount() == 1)
+//				EmpTaskModel.add(bad);
+////				badEmployee.put(emp, "Only 1 task done within given dates with duration = " + dur / 1000 + " sec");
+//			else if (bad.getCount() > 1 && bad.getTotalDuration() < 7200000)
+//				EmpTaskModel.add(bad);
+////				badEmployee.put(emp, "total task duration is less than 2 hours. duration = " + dur / 1000 + " sec");
+//
+//		} // for
+//			// return badEmployee;
+//		return EmpTaskModel;
+//	}
 
 }
