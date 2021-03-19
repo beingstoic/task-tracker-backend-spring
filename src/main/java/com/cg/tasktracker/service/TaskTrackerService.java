@@ -28,7 +28,7 @@ public class TaskTrackerService {
 
 		tasktracker.setTaskDate(new java.sql.Date(System.currentTimeMillis()));
 		Calendar cal = Calendar.getInstance();
-		if (cal.get(Calendar.HOUR) < 9 || cal.get(Calendar.HOUR) >= 18)
+		if (cal.get(Calendar.HOUR_OF_DAY) < 9 || cal.get(Calendar.HOUR_OF_DAY) >= 18)
 			throw new CustomException("Task cannot be added other than office hours");
 		tasktracker.setStartTime(new Timestamp(System.currentTimeMillis()));
 		return repo.save(tasktracker);
@@ -147,7 +147,7 @@ public class TaskTrackerService {
 
 		for (TaskTracker task : repo.findAll()) {
 			Calendar cal = Calendar.getInstance();
-			if (task.getEndTime() == null && cal.get(Calendar.HOUR) >= 18) {
+			if (task.getEndTime() == null && cal.get(Calendar.HOUR_OF_DAY) >= 18) {
 				cal.setTimeInMillis(task.getStartTime().getTime());
 				System.out.println(cal);
 				cal.set(Calendar.HOUR, 18);
