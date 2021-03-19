@@ -5,14 +5,13 @@ package com.cg.tasktracker.entity;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -27,10 +26,8 @@ public class TaskTracker {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long taskId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(	name = "emp_tasks", 
-				joinColumns = @JoinColumn(name = "task_id"), 
-				inverseJoinColumns = @JoinColumn(name = "emp_id"))
+    @ManyToOne(cascade = { CascadeType.MERGE })
+    @JoinColumn(name = "emp_id")
     private EmployeeEntity employee;
 
     @Column(name = "task_date",nullable=false)

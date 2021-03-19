@@ -33,7 +33,7 @@ public class TaskTrackerController {
 	
 	@PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TaskTracker> addTask(@RequestBody TaskTracker task)throws CustomException{
-		System.out.println(task);
+		
 		 if(service.isTaskAlreadyRunning(task))
 			 throw new CustomException("Task already running");	
 		 TaskTracker response=service.addTask(task);
