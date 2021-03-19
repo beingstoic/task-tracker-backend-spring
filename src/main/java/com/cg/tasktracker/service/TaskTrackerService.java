@@ -28,7 +28,8 @@ public class TaskTrackerService {
 
 		tasktracker.setTaskDate(new java.sql.Date(System.currentTimeMillis()));
 		Calendar cal = Calendar.getInstance();
-		if (cal.get(Calendar.HOUR) < 9 || cal.get(Calendar.HOUR) >= 18)
+		System.out.println(cal.HOUR_OF_DAY);
+		if (cal.get(Calendar.HOUR_OF_DAY) < 9 || cal.get(Calendar.HOUR_OF_DAY) >= 18)
 			throw new CustomException("Task cannot be added other than office hours");
 		tasktracker.setStartTime(new Timestamp(System.currentTimeMillis()));
 		return repo.save(tasktracker);
@@ -44,7 +45,7 @@ public class TaskTrackerService {
 			} else if (task.getDuration() != 0) {
 				throw new CustomException("Task already ended");
 			}
-//			Calendar cal = Calendar.getInstance();
+			Calendar cal = Calendar.getInstance();
 //			if (cal.get(Calendar.HOUR) >= 18) {
 //				cal.setTimeInMillis(task.getStartTime().getTime());
 //				System.out.println(cal);
@@ -52,8 +53,8 @@ public class TaskTrackerService {
 //				cal.set(Calendar.MINUTE, 1);
 //				cal.set(Calendar.SECOND, 0);
 //			}
-//			if (cal.get(Calendar.HOUR) < 9)
-//				throw new CustomException("Task cannot end before office starts");
+			if (cal.get(Calendar.HOUR_OF_DAY) < 9 || cal.get(Calendar.HOUR_OF_DAY) >=18)
+				throw new CustomException("Task cannot end before or after  the office hours");
 
 			task.setEndTime(new Timestamp(System.currentTimeMillis()));
 			System.out.println("end time:" + task.getEndTime());
@@ -147,10 +148,10 @@ public class TaskTrackerService {
 
 		for (TaskTracker task : repo.findAll()) {
 			Calendar cal = Calendar.getInstance();
-			if (task.getEndTime() == null && cal.get(Calendar.HOUR) >= 18) {
+			if (task.getEndTime() == null && cal.get(Calendar.HOUR_OF_DAY) >= 18) {
 				cal.setTimeInMillis(task.getStartTime().getTime());
 				System.out.println(cal);
-				cal.set(Calendar.HOUR, 18);
+				cal.set(Calendar.HOUR_OF_DAY, 18);
 				cal.set(Calendar.MINUTE, 1);
 				cal.set(Calendar.SECOND, 0);
 			task.setEndTime(new Timestamp(cal.getTimeInMillis()));

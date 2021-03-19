@@ -1,8 +1,16 @@
 package com.cg.tasktracker.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 @Entity
 public class EmployeeEntity {
@@ -30,6 +38,12 @@ public class EmployeeEntity {
 	
 	@Column(name="bu_joining")
 	private String buJoining;
+
+	@OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+	@JoinTable(	name = "emp_tasks", 
+				joinColumns = @JoinColumn(name = "task_id"), 
+				inverseJoinColumns = @JoinColumn(name = "emp_id"))
+	private Set<TaskTracker> tasks = new HashSet<>();
 
 
 	public String getEmpId() {
