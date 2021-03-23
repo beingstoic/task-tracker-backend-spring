@@ -48,5 +48,8 @@ public interface TaskTrackerRepository extends JpaRepository<TaskTracker, Long> 
 	@Query("Select t FROM TaskTracker t WHERE t.taskDate =:date AND t.endTime >=:endTime ")
 	List<TaskTracker> findBadTaskByDate(@Param(value="date")Date date, @Param(value="endTime")Timestamp endTime);
 	
+	@Query("Select t FROM TaskTracker t WHERE t.taskDate >=:startDate AND t.taskDate <=:endDate AND t.taskName NOT LIKE 'Break' AND t.employee.empId =:empId")
+	List<TaskTracker> findBadEmpAccToDate(@Param(value="startDate") Date startDate,@Param(value="endDate") Date endDate,@Param(value="empId") String empId);
+	
 	
 }

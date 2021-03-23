@@ -11,7 +11,14 @@ public class EmpTaskModel {
 	private List<TaskTracker> tasks;
 	private long totalDuration=0;
 	private String name;
-	
+	private String message;
+
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	public List<TaskTracker> getTasks() {
 		return tasks;
 	}

@@ -151,18 +151,19 @@ public class TaskTrackerController {
 		return service.getBadEmployee(date);
 	}	
 	
-//	@GetMapping(value="/getbademployeewithdate/{startdate}/{enddate}")
-//	public List<BadActivity> getBadEmployeeWithDate(@PathVariable String startdate,@PathVariable String enddate) {
-//		Date convertedDates = null;
-//		Date convertedDatee = null;
-//		try {
-//			convertedDates = new SimpleDateFormat("yyyy-MM-dd").parse(startdate);
-//			convertedDatee = new SimpleDateFormat("yyyy-MM-dd").parse(enddate);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-//		return service.badEmployeeAccToDate(convertedDates, convertedDatee);
-//	}
+	@GetMapping(value = "/fetch-bad-employees-by-date/{startdate}/{enddate}")
+	public List<EmpTaskModel> getBadEmployeeWithDate(@PathVariable String startdate, @PathVariable String enddate) {
+		Date convertedDates = null;
+		Date convertedDatee = null;
+		try {
+			convertedDates = new SimpleDateFormat("yyyy-MM-dd").parse(startdate);
+			convertedDatee = new SimpleDateFormat("yyyy-MM-dd").parse(enddate);
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		return service.badEmployeeAccToDate(convertedDates, convertedDatee);
+	}
+
 
 	
 }
